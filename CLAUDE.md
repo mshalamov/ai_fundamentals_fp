@@ -34,6 +34,15 @@ Two-stage pipeline with on-disk handoff via joblib — there is no shared module
 
 The default model filename `"linear_regression_model.joblib"` is duplicated as a default arg in both `save_regression_model` (model.py) and `load_and_predict` (app.py) — change both if renaming.
 
-## Expected Completed UI
+## UI
 
-Per `docs/ai_final_project.md`, the finished app must show: title "Simple Regression model prediction", a slider "Input Feature for Prediction" (-3.00 to 3.00), a "Predict value" button, the numeric prediction, and a "Prediction vs Actual Target" scatter (grey dataset dots, blue actual, red predicted, dashed line annotated with the difference).
+The app renders: title "Simple Regression model prediction", a slider "Input Feature for Prediction" (-3.00 to 3.00), a "Predict value" button, the numeric prediction (e.g. `Prediction: 26.51…`), and a "Prediction vs Actual Target" scatter (grey dataset dots, blue actual, red predicted, dashed vertical line annotated with `Difference = …`).
+
+## Tests
+
+12 tests live under `tests/`:
+- `tests/conftest.py` — shared fixtures: `tiny_dataset` (deterministic `y = 2x + 1`), `tiny_model`, and `artifacts_cwd` (chdirs into a tmp dir pre-populated with the three joblib artifacts so `src/app.py`'s CWD-relative loads work).
+- `tests/test_model.py` — one direct test per public function in `src/model.py`.
+- `tests/test_app.py` — direct tests for `load_and_predict` and `visualize_difference`, plus two `streamlit.testing.v1.AppTest` cases covering the UI rendering and click flow. Note: `st.write` output is asserted via `at.markdown` (current Streamlit versions consolidate writes into the markdown stream); `getattr(at, "write", [])` is used defensively for forward-compat.
+
+When adding tests, prefer the `artifacts_cwd` fixture over manual joblib setup.
