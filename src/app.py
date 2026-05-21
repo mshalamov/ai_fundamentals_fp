@@ -90,32 +90,28 @@ def visualize_difference(input_feature: float, prediction: ArrayLike):
 
     # Visualization
     fig = plt.figure(figsize=(6,4))
-    # TODO: your code here
+    plt.scatter(X, y, color="grey", label="Dataset")
+    plt.scatter(input_feature, actual_target, color="blue", label="Actual Target")
+    plt.scatter(input_feature, prediction, color="red", label="Predicted Target")
 
-    # Plot the entire dataset (X, y) as grey dots to visualize the data distribution.
-    # plt.scatter....
+    plt.plot(
+        [input_feature, input_feature],
+        [actual_target, float(np.asarray(prediction).ravel()[0])],
+        "k--",
+    )
 
-    # Plot the actual target value for a specific input feature as a blue dot.
-    # plt.scatter...
+    midpoint_y = (actual_target + float(np.asarray(prediction).ravel()[0])) / 2
+    plt.annotate(
+        f"Difference = {float(np.asarray(difference).ravel()[0]):.2f}",
+        xy=(input_feature, midpoint_y),
+        xytext=(input_feature + 0.2, midpoint_y),
+    )
 
-    # Plot the predicted target value for the same input feature as a red dot.
-    # plt.scatter...
-
-    # Display a legend on the plot to label the different scatter points (dataset, actual target, predicted target).
-
-    # Set the title of the plot, describing what is being visualized.
-
-    # Set the label for the x-axis to 'Feature', indicating that the x-axis represents the input features.
-
-    # Set the label for the y-axis to 'Target', indicating that the y-axis represents the target values (actual or predicted).
-
-    # Enable a grid on the plot to improve readability.
-
-    # Draw a dashed line ('k--' for black dashed line) between the actual and predicted target values to visually represent the difference.
-    # plt.plot...
-
-    # Annotate the plot with the difference between the actual and predicted target values, positioned halfway between them and offset slightly for visibility.
-    # plt.annotate...
+    plt.title("Prediction vs Actual Target")
+    plt.xlabel("Feature")
+    plt.ylabel("Target")
+    plt.legend()
+    plt.grid(True)
 
     st.pyplot(fig)
 
