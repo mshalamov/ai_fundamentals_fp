@@ -17,7 +17,9 @@ def test_train_regression_model_returns_fitted_linear_regression(tiny_dataset):
     assert abs(model.intercept_ - 1.0) < 1e-6
 
 
-def test_save_regression_model_default_filename_roundtrip(tmp_path, monkeypatch, tiny_model, tiny_dataset):
+def test_save_regression_model_default_filename_roundtrip(
+    tmp_path, monkeypatch, tiny_model, tiny_dataset
+):
     monkeypatch.chdir(tmp_path)
     X, _ = tiny_dataset
 
