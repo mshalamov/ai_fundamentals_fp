@@ -289,7 +289,9 @@ from joblib import load
 from model import save_regression_model
 
 
-def test_save_regression_model_default_filename_roundtrip(tmp_path, monkeypatch, tiny_model, tiny_dataset):
+def test_save_regression_model_default_filename_roundtrip(
+    tmp_path, monkeypatch, tiny_model, tiny_dataset
+):
     monkeypatch.chdir(tmp_path)
     X, _ = tiny_dataset
 
