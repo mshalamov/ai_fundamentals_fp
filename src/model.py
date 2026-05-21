@@ -58,8 +58,9 @@ def evaluate_regression_model(model: LinearRegression, X_test: ArrayLike, y_test
         y_test (array-like): Validation target values.
 
     """
-    
-    # TODO: your code here
+
+    y_pred = model.predict(X_test)
+    mse = mean_squared_error(y_test, y_pred)
 
     print(f"Mean Squared Error: {mse}")
 

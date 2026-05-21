@@ -4,7 +4,11 @@ import numpy as np
 from joblib import load
 from sklearn.linear_model import LinearRegression
 
-from model import save_regression_model, train_regression_model
+from model import (
+    evaluate_regression_model,
+    save_regression_model,
+    train_regression_model,
+)
 
 
 def test_train_regression_model_returns_fitted_linear_regression(tiny_dataset):
@@ -35,3 +39,16 @@ def test_save_regression_model_custom_filename(tmp_path, monkeypatch, tiny_model
     save_regression_model(tiny_model, filename="custom.joblib")
 
     assert (tmp_path / "custom.joblib").exists()
+
+
+def test_evaluate_regression_model_prints_mse_zero_for_perfect_fit(
+    capsys, tiny_dataset, tiny_model
+):
+    X, y = tiny_dataset
+
+    evaluate_regression_model(tiny_model, X, y)
+
+    captured = capsys.readouterr()
+    assert captured.out.startswith("Mean Squared Error: ")
+    mse_value = float(captured.out.strip().split(":")[1])
+    assert mse_value < 1e-10  # tiny_model fits tiny_dataset exactly
