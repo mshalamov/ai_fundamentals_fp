@@ -41,8 +41,8 @@ def save_regression_model(model: LinearRegression, filename: str = "linear_regre
         filename (str): Name of the file that is used to store the model.
 
     """
-    
-    # TODO: your code here
+
+    dump(model, filename)
 
 def evaluate_regression_model(model: LinearRegression, X_test: ArrayLike, y_test: ArrayLike):
     """
