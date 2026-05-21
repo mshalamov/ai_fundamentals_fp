@@ -25,8 +25,8 @@ def train_regression_model(X_train: ArrayLike, y_train: ArrayLike) -> LinearRegr
 
     """
 
-    # TODO: your code here
-
+    model = LinearRegression()
+    model.fit(X_train, y_train)
     return model
 
 def save_regression_model(model: LinearRegression, filename: str = "linear_regression_model.joblib"):
