@@ -1,9 +1,11 @@
 from __future__ import annotations
+
+import matplotlib.pyplot as plt
+import numpy as np
 import streamlit as st
 from joblib import load
-import numpy as np
 from numpy.typing import ArrayLike
-import matplotlib.pyplot as plt
+
 
 def load_and_predict(X: ArrayLike, filename: str = "linear_regression_model.joblib") -> ArrayLike:
     """
@@ -28,38 +30,39 @@ def load_and_predict(X: ArrayLike, filename: str = "linear_regression_model.jobl
 
 def create_streamlit_app():
     """
-    Creates a Streamlit web application for making predictions with a simple regression model.
+    Creates a Streamlit web application for making predictions with a regression model.
 
-    This function sets up a Streamlit app with a user interface for inputting a single feature 
-    value and making predictions using a pre-trained regression model. The app includes:
-    
+    This function sets up a Streamlit app with a user interface for inputting a single
+    feature value and making predictions using a pre-trained regression model. The app
+    includes:
+
     - A title displayed at the top of the app.
-    - A slider for the user to select an input feature value within a specified range (-3.0 to 3.0).
+    - A slider for the user to select an input feature value within a range (-3.0 to 3.0).
     - A "Predict value" button that, when clicked, triggers the prediction process.
     - Upon clicking the "Predict value" button, the function:
-        - Calls `load_and_predict`, passing the selected feature as input, to load the regression model 
-          and make a prediction.
+        - Calls `load_and_predict`, passing the selected feature as input, to load the
+          regression model and make a prediction.
         - Displays the prediction result on the app.
-        - Calls `visualize_difference`, passing the input feature and the prediction result, 
-          to visualize the difference between the predicted value and the actual value in the original dataset.
+        - Calls `visualize_difference`, passing the input feature and the prediction
+          result, to visualize the difference between the predicted value and the actual
+          value in the original dataset.
 
-    Note: This function does not return any value. It directly manipulates the Streamlit app's UI by 
-    writing content and rendering UI elements.
+    Note: This function does not return any value. It directly manipulates the Streamlit
+    app's UI by writing content and rendering UI elements.
     """
-    # TODO: your code here
+    st.title("Simple Regression model prediction")
 
-    # Streamlit app title
+    input_feature = st.slider(
+        "Input Feature for Prediction",
+        min_value=-3.0,
+        max_value=3.0,
+        value=0.0,
+    )
 
-    # User input for new prediction using a slider
-
-    # Button to make a prediction
-
-        # 1. Call load_and_predict functions.
-        # Make sure you convert the input_feature to a matrix before calling load_and_predict, e.g., load_and_predict([[input_feature]])
-
-        # 2. Display the prediction.
-
-        # 4. Call visualize_difference to display a plot visualizing the difference between actual and perdicted value.
+    if st.button("Predict value"):
+        prediction = load_and_predict([[input_feature]])
+        st.write(f"Prediction: {float(np.asarray(prediction).ravel()[0])}")
+        visualize_difference(input_feature, prediction)
 
 def visualize_difference(input_feature: float, prediction: ArrayLike):
     """
@@ -67,8 +70,10 @@ def visualize_difference(input_feature: float, prediction: ArrayLike):
     in the 'y' dataset and the predicted value for a given 'input_feature'.
 
     Visualize the difference by plotting the entire 'X' & 'y' as a Scatter plot. Then add
-    a blue dot that represents the actual target value, and a red dot that represents the predicted target value for the given 'input_feature'.
-    Add a dashed line connects these points, highlighting the difference between them, which is annotated on the plot.
+    a blue dot that represents the actual target value, and a red dot that represents the
+    predicted target value for the given 'input_feature'.
+    Add a dashed line connects these points, highlighting the difference between them,
+    which is annotated on the plot.
 
     Args:
         input_feature (float): User provided data used for prediction.
@@ -118,15 +123,16 @@ def visualize_difference(input_feature: float, prediction: ArrayLike):
 # This is a helper function. No need to edit it
 def _index_of_closest(X: ArrayLike, k: float) -> int:
     """
-    This function takes an array-like object `X` and a float `k`, and returns the index of the 
-    element in `X` that is closest to `k`. The function first converts `X` into a NumPy array 
-    (if it isn't one already) to ensure compatibility with NumPy operations. It then calculates 
-    the absolute difference between each element in `X` and `k`, identifies the minimum value 
-    among these differences, and returns the index of this minimum difference.
+    This function takes an array-like object `X` and a float `k`, and returns the index
+    of the element in `X` that is closest to `k`. The function first converts `X` into a
+    NumPy array (if it isn't one already) to ensure compatibility with NumPy operations.
+    It then calculates the absolute difference between each element in `X` and `k`,
+    identifies the minimum value among these differences, and returns the index of this
+    minimum difference.
 
     Args:
-        X (ArrayLike): An array-like object containing numerical data. It can be a list, tuple, 
-      or any object that can be converted to a NumPy array.
+        X (ArrayLike): An array-like object containing numerical data. It can be a list,
+            tuple, or any object that can be converted to a NumPy array.
         k (float): The target value to which the closest element in `X` is sought.
 
     Returns:

@@ -1,11 +1,12 @@
 from __future__ import annotations
+
+import numpy as np
+from joblib import dump
+from numpy.typing import ArrayLike
 from sklearn.datasets import make_regression
-from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
-import numpy as np
-from numpy.typing import ArrayLike
-from joblib import dump
+from sklearn.model_selection import train_test_split
 
 
 def train_regression_model(X_train: ArrayLike, y_train: ArrayLike) -> LinearRegression:
@@ -29,12 +30,15 @@ def train_regression_model(X_train: ArrayLike, y_train: ArrayLike) -> LinearRegr
     model.fit(X_train, y_train)
     return model
 
-def save_regression_model(model: LinearRegression, filename: str = "linear_regression_model.joblib"):
+def save_regression_model(
+    model: LinearRegression,
+    filename: str = "linear_regression_model.joblib",
+):
     """
     Serialize and save the regression model.
 
-    This function takes a trained regression 'model' and file name 'filename' that has a default value.
-    It uses Joblib 'dump' to save the model using the provided file name.
+    This function takes a trained regression 'model' and file name 'filename' that has
+    a default value. It uses Joblib 'dump' to save the model using the provided file name.
 
     Args:
         model (sklearn.linear_model.LinearRegression): Trained regression model to be evaluated.
