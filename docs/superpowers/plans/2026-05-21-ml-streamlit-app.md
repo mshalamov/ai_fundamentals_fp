@@ -223,7 +223,7 @@ git commit -m "chore: scaffold uv project, pytest, gitignore, initial repo state
 Create `tests/test_model.py`:
 ```python
 from __future__ import annotations
-import numpy as np
+
 from sklearn.linear_model import LinearRegression
 
 from model import train_regression_model
