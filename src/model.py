@@ -78,8 +78,9 @@ def save_initial_datasets(X: ArrayLike, y: ArrayLike):
     """
     X_filename = "X.joblib"
     y_filename = "y.joblib"
-    
-    # TODO: your code here
+
+    dump(X, X_filename)
+    dump(y, y_filename)
 
 if __name__ == '__main__':
     # Generate a dataset

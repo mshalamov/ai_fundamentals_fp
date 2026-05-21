@@ -6,6 +6,7 @@ from sklearn.linear_model import LinearRegression
 
 from model import (
     evaluate_regression_model,
+    save_initial_datasets,
     save_regression_model,
     train_regression_model,
 )
@@ -52,3 +53,14 @@ def test_evaluate_regression_model_prints_mse_zero_for_perfect_fit(
     assert captured.out.startswith("Mean Squared Error: ")
     mse_value = float(captured.out.strip().split(":")[1])
     assert mse_value < 1e-10  # tiny_model fits tiny_dataset exactly
+
+
+def test_save_initial_datasets_writes_X_and_y(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    X = np.array([[1.0], [2.0], [3.0]])
+    y = np.array([10.0, 20.0, 30.0])
+
+    save_initial_datasets(X, y)
+
+    np.testing.assert_array_equal(load(tmp_path / "X.joblib"), X)
+    np.testing.assert_array_equal(load(tmp_path / "y.joblib"), y)
