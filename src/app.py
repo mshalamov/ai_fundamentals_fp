@@ -20,8 +20,9 @@ def load_and_predict(X: ArrayLike, filename: str = "linear_regression_model.jobl
     Returns:
         np.ndarray: Predicted value.
     """
-    
-    # TODO: your code here
+
+    model = load(filename)
+    y = model.predict(X)
 
     return y
 
