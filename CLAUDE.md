@@ -4,21 +4,25 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Context
 
-This is a course final-project skeleton: a simple linear regression model trained on synthetic data and served through a Streamlit web app. `src/model.py` and `src/app.py` ship with `# TODO: your code here` placeholders that the student fills in. Spec lives at `docs/ai_final_project.md`. There is no test suite, lint config, or CI.
+A course final-project deliverable: a simple linear regression model trained on synthetic data and served through a Streamlit web app. Spec lives at `docs/ai_final_project.md`; implementation plan at `docs/superpowers/plans/2026-05-21-ml-streamlit-app.md`. Dependencies are managed by **uv** (single source of truth: `pyproject.toml`, with a committed `uv.lock`). The 12-test pytest suite and ruff lint are both expected to pass clean.
 
 ## Commands
 
 ```bash
-# Install deps
-pip install -r requirements.txt
+# Install/sync deps (creates .venv if missing). Installs main + test + linter groups by default.
+uv sync
 
 # Step 1: train + serialize the model and datasets.
-# Writes linear_regression_model.joblib, X.joblib, y.joblib into the CWD.
-cd src && python model.py
+# Writes linear_regression_model.joblib, X.joblib, y.joblib into the CWD (i.e. src/).
+cd src && uv run python model.py
 
 # Step 2: serve the Streamlit UI (must be run from src/, since app.py
 # loads the .joblib artifacts via bare filenames from the CWD).
-cd src && streamlit run app.py
+cd src && uv run streamlit run app.py
+
+# Tests + lint
+uv run pytest -v
+uv run ruff check .
 ```
 
 ## Architecture
