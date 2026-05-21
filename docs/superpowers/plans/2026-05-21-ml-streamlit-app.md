@@ -148,7 +148,6 @@ Create an empty `tests/__init__.py`.
 Create `tests/conftest.py`:
 ```python
 from __future__ import annotations
-from pathlib import Path
 import numpy as np
 import pytest
 from joblib import dump
